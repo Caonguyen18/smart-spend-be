@@ -1,0 +1,42 @@
+// config database
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// --- USER MODULE ---
+model User {
+  id           String        @id @default(uuid())
+  email        String        @unique
+  password     String
+  name         String?
+  transactions Transaction[]
+  createdAt    DateTime      @default(now())
+}
+
+// --- TRANSACTION MODULE ---
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+enum categoryTransactionType {
+  FOOD
+  TRAVEL
+  SALARY
+}
+
+model Transaction {
+  id          String   @id @default(uuid())
+  amount      Float
+  type        TransactionType
+  category    categoryTransactionType
+  note        String?
+  date        DateTime @default(now())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+}
