@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import {
   categoryTransactionType,
-  PrismaClient,
   TransactionType,
 } from '@prisma/client';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class TransactionsService {
-  private prisma = new PrismaClient();
+  constructor(private prisma: PrismaService) {}
 
   // Hàm lấy tất cả giao dịch của 1 người dùng
   async findAll(userId: string) {
