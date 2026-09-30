@@ -8,7 +8,7 @@ import { JwtModule } from '@nestjs/jwt';
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET_KEY,
-      signOptions: { expiresIn: '1d' }, // Token có hiệu lực trong 1 ngày
+      signOptions: { expiresIn: '1d' },
     }),
   ],
   controllers: [AuthController],

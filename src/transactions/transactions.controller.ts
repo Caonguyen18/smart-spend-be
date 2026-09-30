@@ -29,4 +29,9 @@ export class TransactionsController {
     const userId = req.user.sub;
     return this.transactionsService.create({ ...createDto, userId: userId });
   }
+
+  @Post('ai-extract')
+  async aiExtract(@Body() description: string, @Req() _req: any) {
+    return this.aiService.extractTransactionFromText(description);
+  }
 }

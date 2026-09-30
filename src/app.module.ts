@@ -8,7 +8,13 @@ import { AiService } from './ai/ai.service';
 import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
-  imports: [PrismaModule, TransactionsModule, UsersModule, AuthModule],
+  imports: [
+    PrismaModule,
+    TransactionsModule,
+    UsersModule,
+    AuthModule,
+    AiService,
+  ],
   controllers: [AppController],
   providers: [AppService, AiService],
 })
