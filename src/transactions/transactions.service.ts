@@ -8,7 +8,7 @@ export class TransactionsService {
 
   // Hàm lấy tất cả giao dịch của 1 người dùng
   async findAll(userId: string) {
-    return this.prisma.transaction.findMany({
+    return await this.prisma.transaction.findMany({
       where: { userId },
       orderBy: { date: 'desc' },
     });
@@ -22,7 +22,7 @@ export class TransactionsService {
     note?: string;
     userId: string;
   }) {
-    return this.prisma.transaction.create({
+    return await this.prisma.transaction.create({
       data: data,
     });
   }
