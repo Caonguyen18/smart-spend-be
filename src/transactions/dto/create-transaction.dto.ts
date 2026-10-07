@@ -6,7 +6,7 @@ import {
   IsString,
   Min,
 } from 'class-validator';
-import { categoryTransactionType, TransactionType } from '@prisma/client';
+import { TransactionType } from '@prisma/client';
 
 export class CreateTransactionDto {
   @IsNumber({}, { message: 'Số tiền phải là con số cụ thể' })
@@ -14,17 +14,13 @@ export class CreateTransactionDto {
   @IsNotEmpty({ message: 'Số tiền không được để trống' })
   amount: number;
 
-  @IsEnum(TransactionType, {
-    message: 'Sai kiểu của giao dịch',
-  })
-  @IsNotEmpty()
+  @IsEnum(TransactionType, { message: 'Kiểu giao dịch không hợp lệ' })
+  @IsNotEmpty({ message: 'Kiểu giao dịch không được để trống' })
   type: TransactionType;
 
-  @IsEnum(categoryTransactionType, {
-    message: 'Sai kiểu danh mục của giao dịch',
-  })
-  @IsNotEmpty()
-  category: categoryTransactionType;
+  @IsString()
+  @IsNotEmpty({ message: 'Danh mục không được để trống' })
+  categoryId: string;
 
   @IsString()
   @IsOptional()

@@ -1,11 +1,11 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { GoogleGenAI, Type } from '@google/genai';
-import { TransactionType, categoryTransactionType } from '@prisma/client';
+import { TransactionType } from '@prisma/client';
 
 export interface ExtractedTransaction {
   amount: number;
   type: TransactionType;
-  category: categoryTransactionType;
+  category: string;
   note: string;
 }
 
@@ -43,11 +43,6 @@ export class AiService {
               },
               category: {
                 type: Type.STRING,
-                enum: [
-                  categoryTransactionType.FOOD,
-                  categoryTransactionType.TRAVEL,
-                  categoryTransactionType.SALARY,
-                ],
                 description: 'Danh mục giao dịch',
               },
               note: {

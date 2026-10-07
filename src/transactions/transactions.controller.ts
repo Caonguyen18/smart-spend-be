@@ -31,7 +31,7 @@ export class TransactionsController {
     @Req() req: any,
   ) {
     const userId = req.user.sub;
-    return this.transactionsService.create({ ...createDto, userId: userId });
+    return this.transactionsService.create({ ...createDto, userId });
   }
 
   @Post('ai-extract')
@@ -39,6 +39,18 @@ export class TransactionsController {
     const userId = req.user.sub;
     const extracted =
       await this.aiService.extractTransactionFromText(description);
-    return this.transactionsService.create({ ...extracted, userId: userId });
+
+    const category = await this.transactionsService.findOrCreateCategory(
+      extracted.category,
+      userId,
+    );
+
+    return this.transactionsService.create({
+      amount: extracted.amount,
+      type: extracted.type,
+      categoryId: category.id,
+      note: extracted.note,
+      userId,
+    });
   }
 }
